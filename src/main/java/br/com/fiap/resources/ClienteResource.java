@@ -15,9 +15,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.com.fiap.BO.ClienteBO;
-import br.com.fiap.beans.CadastroRequest;
 import br.com.fiap.beans.Cliente;
-import br.com.fiap.beans.Login;
+import br.com.fiap.model.CadastroCompletoRequest;
 
 @Path("/cliente")
 public class ClienteResource {
@@ -41,44 +40,53 @@ public class ClienteResource {
         return clienteBO.selecionarBo();
     }
 
-    
+    // Método para cadastro completo de cliente, login e endereço usando o BO
     @POST
-    @Path("/cadastro")
+    @Path("/cadastroCompleto")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response cadastrarCliente(CadastroRequest request) {
+    public Response cadastrarCompleto(CadastroCompletoRequest request) {
         try {
-            Cliente cliente = request.getCliente();
-            Login login = request.getLogin();
+            // Cadastro completo usando o ClienteBO
+            boolean sucesso = clienteBO.cadastrarCompleto(request);
 
-            int id = clienteBO.cadastrarCliente(cliente, login);
-            if (id > 0) {
-                return Response.status(Response.Status.CREATED).entity("Cliente e login cadastrados com ID: " + id).build();
+            if (sucesso) {
+                return Response.status(Response.Status.CREATED).entity("Cadastro completo realizado com sucesso").build();
             } else {
-                return Response.status(Response.Status.BAD_REQUEST).entity("Erro ao cadastrar cliente e login").build();
+                return Response.status(Response.Status.BAD_REQUEST).entity("Erro ao realizar o cadastro completo").build();
             }
+
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro interno: " + e.getMessage()).build();
         }
     }
-
 
     // Endpoint para atualizar um cliente
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response atualizarCliente(Cliente cliente, @PathParam("id") int id) throws ClassNotFoundException, SQLException {
-        cliente.setCpf(id);
+        // Define o ID do cliente para atualização
+        cliente.setId(id);
         clienteBO.atualizarBo(cliente);
         return Response.ok("Cliente atualizado com sucesso!").build();
     }
+
 
     // Endpoint para deletar um cliente
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response deletarCliente(@PathParam("id") int id) throws ClassNotFoundException, SQLException {
-        clienteBO.deletarBo(id);
-        return Response.ok("Cliente deletado com sucesso!").build();
+        try {
+            clienteBO.deletarBo(id);
+            return Response.ok("Cliente deletado com sucesso!").build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                           .entity("Erro ao deletar cliente: " + e.getMessage())
+                           .build();
+        }
     }
 }
