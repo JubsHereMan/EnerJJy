@@ -36,7 +36,7 @@ public class ClienteDAO {
             stmt.setLong(3, cliente.getTelefone());
             stmt.executeUpdate();
 
-            // Obter o ID do cliente
+          
             String queryId = "SELECT id_cliente FROM TBL_CLIENTE WHERE cpf = ?";
             try (PreparedStatement stmtId = conexao.prepareStatement(queryId)) {
                 stmtId.setLong(1, cliente.getCpf());

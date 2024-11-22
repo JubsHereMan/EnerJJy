@@ -29,8 +29,7 @@ public class EnderecoResource {
         System.out.println("ID Cliente: " + idCliente);
         System.out.println("CEP: " + endereco.getCep());
         System.out.println("Número: " + endereco.getNumero());
-        try {
-            // Chamar o BO para atualizar o endereço
+        try {      
             boolean atualizado = enderecoBO.atualizarEndereco(endereco, idCliente);
 
             if (atualizado) {

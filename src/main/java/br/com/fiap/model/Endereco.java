@@ -12,11 +12,11 @@ public class Endereco {
     private String localidade;
     private String uf;
 
-    // Construtor padrão (necessário para a desserialização)
+
     public Endereco() {
     }
 
-    // Construtor completo
+
     public Endereco(int idCliente, String logradouro, String numero, String cep, String bairro, String localidade, String uf) {
         this.idCliente = idCliente;
         this.logradouro = logradouro;
@@ -99,5 +99,14 @@ public class Endereco {
 	public void setIdEndereco(int idEndereco) {
 		this.idEndereco = idEndereco;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Endereco [idEndereco=" + idEndereco + ", id=" + id + ", idCliente=" + idCliente + ", logradouro="
+				+ logradouro + ", numero=" + numero + ", cep=" + cep + ", bairro=" + bairro + ", localidade="
+				+ localidade + ", uf=" + uf + "]";
+	}
+	
 	
 }

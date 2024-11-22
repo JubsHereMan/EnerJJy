@@ -7,8 +7,23 @@ public class Cliente {
     private long cpf; 
     private long telefone; 
 
-    // Getters e Setters
-    public int getId() {
+    
+    
+  
+    public Cliente(int id, String nome, long cpf, long telefone) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.telefone = telefone;
+	}
+
+	public Cliente() {
+		super();
+	}
+
+	
+	public int getId() {
         return id;
     }
 
@@ -39,4 +54,11 @@ public class Cliente {
     public void setTelefone(long telefone) {
         this.telefone = telefone;
     }
+
+	@Override
+	public String toString() {
+		return "Cliente [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", telefone=" + telefone + "]";
+	}
+    
+    
 }

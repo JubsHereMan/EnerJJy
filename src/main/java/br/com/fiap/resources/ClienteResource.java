@@ -23,7 +23,7 @@ public class ClienteResource {
 
     private ClienteBO clienteBO;
 
-    // Construtor que inicializa o ClienteBO
+  
     public ClienteResource() {
         try {
             this.clienteBO = new ClienteBO();
@@ -33,14 +33,14 @@ public class ClienteResource {
         }
     }
 
-    // Endpoint para selecionar todos os clientes
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Cliente> selecionarClientes() throws ClassNotFoundException, SQLException {
         return clienteBO.selecionarBo();
     }
 
-    // Método para cadastro completo de cliente, login e endereço usando o BO
+   
     @POST
     @Path("/cadastroCompleto")
     @Consumes(MediaType.APPLICATION_JSON)

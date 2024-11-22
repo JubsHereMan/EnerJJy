@@ -13,7 +13,7 @@ public class EnderecoDAO {
 
     private Connection conexao;
 
-    // Construtor para inicializar a conexão
+
     public EnderecoDAO() {
         try {
             this.conexao = DriverManager.getConnection(
@@ -24,10 +24,10 @@ public class EnderecoDAO {
         }
     }
 
-    // Método para inserir o endereço vinculado ao ID do cliente
+    
     public int inserir(Endereco endereco, int idCliente) {
         try {
-            // Validação e chamada à API ViaCEP, se necessário
+            
             if (endereco.getCep() != null && endereco.getCep().length() == 8 && 
                 (endereco.getLogradouro() == null || endereco.getLogradouro().isEmpty())) {
                 
@@ -35,14 +35,14 @@ public class EnderecoDAO {
                 ViaCepService viaCepService = new ViaCepService();
                 Endereco enderecoViaCep = viaCepService.buscarEnderecoPorCep(endereco.getCep());
 
-                // Preenche os dados do endereço usando a resposta da API
+               
                 endereco.setLogradouro(enderecoViaCep.getLogradouro());
                 endereco.setBairro(enderecoViaCep.getBairro());
                 endereco.setLocalidade(enderecoViaCep.getLocalidade());
                 endereco.setUf(enderecoViaCep.getUf());
             }
 
-            // Inserção no banco de dados
+    
             String sql = "INSERT INTO tbl_endereco (id_cliente, logradouro, numero, cep, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement stmt = conexao.prepareStatement(sql, new String[]{"id_endereco"})) {
                 stmt.setInt(1, idCliente);
@@ -69,7 +69,7 @@ public class EnderecoDAO {
         return -1;
     }
 
-    // Método para buscar um endereço pelo ID
+  
     public Endereco buscarPorId(int idEndereco) {
         String sql = "SELECT * FROM tbl_endereco WHERE id_endereco = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
@@ -114,7 +114,7 @@ public class EnderecoDAO {
     }
     
     
- // Método para deletar um endereço pelo ID no DAO
+
     public boolean deletarEndereco(int idEndereco) {
         String sql = "DELETE FROM tbl_endereco WHERE id_endereco = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
@@ -129,7 +129,7 @@ public class EnderecoDAO {
     
     
     
-    // Método para fechar a conexão com o banco de dados
+   
     public void fecharConexao() {
         try {
             if (conexao != null && !conexao.isClosed()) {
