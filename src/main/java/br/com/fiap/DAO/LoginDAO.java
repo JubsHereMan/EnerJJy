@@ -48,6 +48,24 @@ public class LoginDAO {
         return null;
     }
 
+    
+    public boolean atualizarLogin(int idCliente, String novoEmail, String novaSenha) {
+        String sql = "UPDATE tbl_login SET email = ?, senha = ? WHERE id_cliente = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, novoEmail);
+            stmt.setString(2, novaSenha);
+            stmt.setInt(3, idCliente);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar login no DAO: " + e.getMessage());
+        }
+        return false;
+    }
+
+    
+    
 
     public void fecharConexao() {
         if (conexao != null) {

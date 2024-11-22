@@ -2,7 +2,8 @@ package br.com.fiap.model;
 
 public class Endereco {
 
-    private int id;
+	private int idEndereco;
+	private int id;
     private int idCliente;
     private String logradouro;
     private String numero;
@@ -90,4 +91,13 @@ public class Endereco {
     public void setUf(String uf) {
         this.uf = uf;
     }
+
+    public int getIdEndereco() {
+		return idEndereco;
+	}
+
+	public void setIdEndereco(int idEndereco) {
+		this.idEndereco = idEndereco;
+	}
+	
 }

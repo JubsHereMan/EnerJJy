@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import br.com.fiap.model.Endereco;
 import br.com.fiap.services.ViaCepService;
 
@@ -92,6 +93,42 @@ public class EnderecoDAO {
         return null;
     }
 
+    
+    public boolean atualizar(Endereco endereco, int idCliente) {
+        String sql = "UPDATE tbl_endereco SET logradouro = ?, numero = ?, cep = ?, bairro = ?, cidade = ?, estado = ? WHERE id_cliente = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, endereco.getLogradouro());
+            stmt.setString(2, endereco.getNumero());
+            stmt.setString(3, endereco.getCep());
+            stmt.setString(4, endereco.getBairro());
+            stmt.setString(5, endereco.getLocalidade());
+            stmt.setString(6, endereco.getUf());
+            stmt.setInt(7, idCliente);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar endereço no DAO: " + e.getMessage());
+        }
+        return false;
+    }
+    
+    
+ // Método para deletar um endereço pelo ID no DAO
+    public boolean deletarEndereco(int idEndereco) {
+        String sql = "DELETE FROM tbl_endereco WHERE id_endereco = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idEndereco);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.out.println("Erro ao deletar endereço no DAO: " + e.getMessage());
+        }
+        return false;
+    }
+    
+    
+    
     // Método para fechar a conexão com o banco de dados
     public void fecharConexao() {
         try {
