@@ -8,8 +8,8 @@ public class ConexaoFactory {
     
    
     private static final String URL = "jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL"; 
-    private static final String USER = "RM557774"; 
-    private static final String PASSWORD = "080403"; 
+    private static final String USER = ""; 
+    private static final String PASSWORD = ""; 
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
      
